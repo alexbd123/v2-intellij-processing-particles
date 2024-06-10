@@ -1,6 +1,8 @@
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.Objects;
+
 /**
  * A Spark object is an object which can move and display itself.  Each spark maintains its own position and velocity.
  */
@@ -21,6 +23,7 @@ public class Spark {
     private PVector vel;
     private int myColour; //there's no real color type, it's just stored as an int
     private final PApplet p5;
+    private String shape;
 
     /**
      * Constructor for Spark objects.
@@ -32,6 +35,7 @@ public class Spark {
         this.vel = PVector.random2D().mult(p5.random(0.1f, 2));
         this.size = size;
         this.myColour = colour;
+        this.shape = Utils.pickFromArrayOfObjects(new String[]{"circle", "square"});
     }
 
     public void display() {
@@ -41,7 +45,12 @@ public class Spark {
             p5.stroke(0, 100);
         }
         p5.fill(myColour);
-        p5.circle(pos.x, pos.y, size);
+        if (Objects.equals(this.shape, "circle")){
+            p5.circle(pos.x, pos.y, size);
+        } else {
+            p5.square(pos.x, pos.y, size);
+        }
+
     }
 
     public void update() {
